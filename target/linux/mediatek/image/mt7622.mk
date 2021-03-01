@@ -45,14 +45,13 @@ define Device/bananapi_bpi-r64
 		     uboot-mt7622_bananapi_bpi-r64-sdmmc \
 		     e2fsprogs mkf2fs f2fsck \
 		     kmod-nls-cp437 kmod-nls-iso8859-1 kmod-vfat blockd
-  ARTIFACTS := boot-sdcard.img boot-emmc.img bl2-emmc.bin bl31-emmc.bin header-emmc.bin
+  ARTIFACTS := header-emmc.bin sdcard.img
   IMAGES := sysupgrade.itb
   KERNEL_INITRAMFS_SUFFIX := -recovery.itb
-  ARTIFACT/boot-sdcard.img	:= mt7622-gpt sdmmc | mmc-header sdmmc | pad-to 512k | bl2 sdmmc-2ddr | pad-to 2M | bl31-uboot bananapi_bpi-r64-sdmmc | pad-to 6M
-  ARTIFACT/boot-emmc.img	:= mt7622-gpt  emmc | mmc-header  emmc |                                pad-to 2M | bl31-uboot bananapi_bpi-r64-emmc  | pad-to 6M
   ARTIFACT/header-emmc.bin	:= mt7622-gpt  emmc | mmc-header  emmc
-  ARTIFACT/bl31-emmc.bin	:= bl31-uboot bananapi_bpi-r64-emmc
-  ARTIFACT/bl2-emmc.bin		:= bl2 emmc-2ddr
+  ARTIFACT/sdcard.img		:= mt7622-gpt sdmmc | mmc-header sdmmc | pad-to 128k | append-image header-emmc.bin | pad-to 256k |\
+				   bl2 emmc-2ddr | pad-to 512k | bl2 sdmmc-2ddr | pad-to 1M | bl31-uboot bananapi_bpi-r64-emmc | pad-to 2M |\
+				   bl31-uboot bananapi_bpi-r64-sdmmc | pad-to 6M
   KERNEL			:= kernel-bin | gzip
   KERNEL_INITRAMFS		:= kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 128k
   IMAGE/sysupgrade.itb		:= append-kernel | fit gzip $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb external-static-with-rootfs | append-metadata
@@ -119,9 +118,9 @@ define Device/mediatek_mt7622-rfb1
 endef
 TARGET_DEVICES += mediatek_mt7622-rfb1
 
-define Device/mediatek_mt7622-ubi
+define Device/mediatek_mt7622-rfb1-ubi
   DEVICE_VENDOR := MediaTek
-  DEVICE_MODEL := MTK7622 AP (UBI)
+  DEVICE_MODEL := MTK7622 rfb1 AP (UBI)
   DEVICE_DTS := mt7622-rfb1-ubi
   DEVICE_DTS_DIR := ../dts
   UBINIZE_OPTS := -E 5
@@ -135,7 +134,7 @@ define Device/mediatek_mt7622-ubi
   IMAGE/sysupgrade.bin := sysupgrade-tar
   DEVICE_PACKAGES := kmod-usb-ohci kmod-usb2 kmod-usb3 kmod-ata-ahci-mtk
 endef
-TARGET_DEVICES += mediatek_mt7622-ubi
+TARGET_DEVICES += mediatek_mt7622-rfb1-ubi
 
 define Device/ubnt_unifi-6-lr
   DEVICE_VENDOR := Ubiquiti
