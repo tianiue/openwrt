@@ -233,6 +233,10 @@ jobs:
 
           # WiFi网卡驱动:
           cat >> .config <<EOF
+          CONFIG_BRCMFMAC_PCIE=y
+          CONFIG_BRCMFMAC_USB=y
+          CONFIG_DRIVER_11AX_SUPPORT=y
+          CONFIG_DRIVER_WEXT_SUPPORT=y
           CONFIG_PACKAGE_kmod-adm8211=y
           CONFIG_PACKAGE_kmod-ar5523=y
           CONFIG_PACKAGE_kmod-ath6kl-usb=y
@@ -258,7 +262,6 @@ jobs:
           CONFIG_PACKAGE_kmod-lib80211=y
           CONFIG_PACKAGE_kmod-libertas-usb=y
           CONFIG_PACKAGE_kmod-libipw=y
-          CONFIG_PACKAGE_kmod-mac80211-hwsim=y
           CONFIG_PACKAGE_kmod-mt76=y
           CONFIG_PACKAGE_kmod-mt7601u=y
           CONFIG_PACKAGE_kmod-mt7603=y
@@ -323,6 +326,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-vssr=y
           # CONFIG_PACKAGE_lua-maxminddb=y
           CONFIG_PACKAGE_luci-app-passwall=y
+          CONFIG_PACKAGE_xray-core=y
           CONFIG_PACKAGE_luci-app-ttnode=y
           CONFIG_PACKAGE_adguardhome=y
           CONFIG_PACKAGE_luci-app-adguardhome=y
