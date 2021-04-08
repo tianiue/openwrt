@@ -23,17 +23,13 @@
 	};
 };
 
-&ref {
-	clock-frequency = <40000000>;
-};
-
 &spi {
 	status = "okay";
 
 	flash@0 {
 		compatible = "jedec,spi-nor";
 		reg = <0>;
-		spi-max-frequency = <40000000>;
+		spi-max-frequency = <20000000>;
 
 		partitions {
 			compatible = "fixed-partitions";
@@ -42,45 +38,45 @@
 
 			partition@0 {
 				label = "u-boot";
-				reg = <0x000000 0x040000>;
+				reg = <0x0 0x40000>;
 				read-only;
 			};
 
 			partition@40000 {
 				label = "u-boot-env";
-				reg = <0x040000 0x010000>;
+				reg = <0x40000 0x10000>;
 			};
 
 			partition@50000 {
 				label = "custom";
-				reg = <0x050000 0x050000>;
+				reg = <0x50000 0x50000>;
 				read-only;
 			};
 
 			partition@a0000 {
 				label = "loader";
-				reg = <0x0a0000 0x010000>;
+				reg = <0xa0000 0x10000>;
 			};
 
 			fwconcat1: partition@b0000 {
 				label = "fwconcat1";
-				reg = <0x0b0000 0x170000>;
+				reg = <0xb0000 0xf0000>;
 			};
 
-			fwconcat0: partition@220000 {
+			fwconcat0: partition@1a0000 {
 				label = "fwconcat0";
-				reg = <0x220000 0xbd0000>;
+				reg = <0x1a0000 0x4d0000>;
 			};
 
-			partition@df0000 {
+			partition@670000 {
 				label = "failsafe";
-				reg = <0xdf0000 0x200000>;
+				reg = <0x670000 0x180000>;
 				read-only;
 			};
 
-			art: partition@ff0000 {
+			art: partition@7f0000 {
 				label = "art";
-				reg = <0xff0000 0x010000>;
+				reg = <0x7f0000 0x10000>;
 				read-only;
 			};
 		};
